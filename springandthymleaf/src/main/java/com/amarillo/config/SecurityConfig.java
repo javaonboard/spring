@@ -1,4 +1,4 @@
-package com.amarillo.springandthymleaf.security;
+package com.amarillo.config;
 
 
 import org.springframework.context.annotation.Configuration;

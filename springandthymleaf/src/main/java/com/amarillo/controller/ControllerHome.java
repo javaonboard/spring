@@ -1,4 +1,4 @@
-package com.amarillo.springandthymleaf.controller;
+package com.amarillo.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,5 +15,10 @@ public class ControllerHome {
     public String homePage(Model model){
         model.addAttribute("appName",appName);
         return "home";
+    }
+
+    @GetMapping("/revenue")
+    public String revenuePage(Model model){
+        return "revenue";
     }
 }
