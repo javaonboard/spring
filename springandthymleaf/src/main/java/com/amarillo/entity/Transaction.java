@@ -1,9 +1,7 @@
 package com.amarillo.entity;
 
 import lombok.Data;
-
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +17,8 @@ public class Transaction {
     private String day;
     private String time;
     private String description;
-    @Column(nullable= false, precision=7, scale=2)
-    @Digits(integer = 7, fraction = 2)
+    @Column( precision=7, scale=2)
+    //@Digits(integer = 7, fraction = 2)
     private BigDecimal amount;
     private String type;
 
