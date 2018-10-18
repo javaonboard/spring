@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Report of Transactions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:if="${not #lists.isEmpty(revenues)}">
+    <h2>Revenues List</h2>
+    <table class="glyphicon glyphicon-calendar">
+        <tr>
+            <th>Transaction Id</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+        <tr th:each="transaction : ${revenues}">
+            <td th:text="${transaction.id}"></td>
+            <td th:text="${transaction.day}"></td>
+            <td th:text="${transaction.time}"></td>
+            <td th:text="${transaction.description}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.type}"></td>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>
