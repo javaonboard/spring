@@ -22,7 +22,7 @@ public class Transaction {
     private BigDecimal amount;
     private String type;
 
-    Transaction(String day, String description, BigDecimal amount, String type){
+    public Transaction(String day, String description, BigDecimal amount, String type){
         LocalDateTime now = LocalDateTime.now();
         time = now.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
         this.day = day;
