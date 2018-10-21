@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RevenueRepository extends CrudRepository<Transaction,Long> {
+public interface TransactionRepository extends CrudRepository<Transaction,Long> {
 
     @Query(value = "SELECT * from TRANSACTION WHERE day = ?1",nativeQuery = true)
     List<Transaction> getAllRevenueByDay(@Param("day") String day);

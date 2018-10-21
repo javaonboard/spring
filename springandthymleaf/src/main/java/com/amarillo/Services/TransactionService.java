@@ -4,7 +4,7 @@ import com.amarillo.entity.Transaction;
 
 import java.util.List;
 
-public interface RevenueService {
+public interface TransactionService {
 
     Transaction createRevenue(Transaction transaction);
     Transaction updateRevenue(Transaction transaction);

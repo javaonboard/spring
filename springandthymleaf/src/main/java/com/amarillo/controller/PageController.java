@@ -17,8 +17,8 @@ public class PageController {
         return "home";
     }
 
-    @GetMapping("/revenue")
+    @GetMapping("/transaction")
     public String revenuePage(Model model){
-        return "revenue";
+        return "transaction";
     }
 }

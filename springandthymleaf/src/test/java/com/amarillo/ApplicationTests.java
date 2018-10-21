@@ -1,7 +1,7 @@
 package com.amarillo;
 
 import com.amarillo.entity.Transaction;
-import com.amarillo.repository.RevenueRepository;
+import com.amarillo.repository.TransactionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class ApplicationTests {
     @Autowired
-    RevenueRepository repository;
+    TransactionRepository repository;
 
     @Test
     public void contextLoads() {

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../static/bootstrap.css" rel="stylesheet" th:href="@{/bootstrap.css}"/>
+    <title>Home Page</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container mt-5 ml-5">
+    <div class="row">
+        <!-- Start -->
+        <div class="col-lg-4">
+
+            <!-- Start -->
+             <div class="row">
+                 <div class="col-8">
+                     <h4>Transaction Form</h4>
+                 </div>
+             </div>
+            <!-- End -->
+
+            <!-- Start -->
+            <!--/*@thymesVar id="trform" type=""*/-->
+            <form action="#" th:action="@{/create}" th:object="${transaction}" method="post">
+            <div class="row form-group">
+                <div class="col-2">Type</div>
+                <div class="form-check form-check-inline">
+                     <input type="radio" class="form-check-input"  >
+                        <label class="form-check-label">Revenue</label>
+                </div>
+                <div class="form-check form-check-inline">
+                     <input type="radio" class="form-check-input"  >
+                        <label class="form-check-label" >Expense</label>
+                </div>
+            </div>
+            <!-- End -->
+
+            <!-- Start -->
+            <div class ="row form-group">
+                <div class="col-2">
+                    <label >Day</label>
+                </div>
+                    <div class="col-6">
+                        <select class="form-control" >
+                            <option>SUNDAY</option>
+                            <option>MONDAY</option>
+                            <option>TUESDAY</option>
+                            <option>WEDNESDAY</option>
+                            <option>THURSDAY</option>
+                            <option>FRIDAY</option>
+                            <option>SATURDAY</option>
+                        </select>
+                    </div>
+             </div>
+            <!-- End -->
+
+            <!-- Start -->
+            <div class="row">
+                <div class="col-2">Amount</div>
+                <div class="col-6">
+                    <div class="input-group form-group">
+                        <input type="text" class="form-control" th:field="*{amount}">
+                        <div class="input-group-append">
+                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End -->
+
+            <!-- Start -->
+            <div class="row">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control"  rows="2" ></textarea>
+                        </div>
+                    </div>
+            </div>
+            <!-- End -->
+
+            <!-- Start -->
+            <div class="row">
+                <div class="col-4 form-group">
+                    <button type="submit"  class="btn btn-primary">Create</button>
+                </div>
+
+            </div>
+            <!-- End -->
+            </form>
+        </div>
+        <!-- End -->
+
+        <!-- Start-->
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-7">
+                    <h4>Table of Transactions</h4>
+                </div>
+            </div>
+            <div class="row-12">
+                    <table class="table table-sm table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Day</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1001</th>
+                            <td>SUNDAY</td>
+                            <td>12:50:00 PM</td>
+                            <td>some Description</td>
+                            <td>Revenue</td>
+                            <td>13.99</td>
+                            <td>DELETE | EDIT</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <!-- End -->
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

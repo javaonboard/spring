@@ -1,17 +1,17 @@
 package com.amarillo.Services;
 
 import com.amarillo.entity.Transaction;
-import com.amarillo.repository.RevenueRepository;
+import com.amarillo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RevenueServiceImpl implements RevenueService {
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    RevenueRepository revenueRepository;
+    TransactionRepository transactionRepository;
 
     @Override
     public Transaction createRevenue(Transaction transaction) {
@@ -30,7 +30,7 @@ public class RevenueServiceImpl implements RevenueService {
 
     @Override
     public Iterable<Transaction> getAllRevenue() {
-        return revenueRepository.findAll();
+        return transactionRepository.findAll();
     }
 
     @Override
