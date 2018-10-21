@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="../static/bootstrap.css" rel="stylesheet" th:href="@{/bootstrap.css}"/>
     <title>Home Page</title>
@@ -28,7 +29,7 @@
             <div class="row form-group">
                 <div class="col-2">Type</div>
                 <div class="form-check form-check-inline">
-                     <input type="radio" class="form-check-input"  >
+                     <input type="radio" class="form-check-input" th:field="*{type}">
                         <label class="form-check-label">Revenue</label>
                 </div>
                 <div class="form-check form-check-inline">
