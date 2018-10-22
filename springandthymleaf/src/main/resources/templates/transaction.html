@@ -23,77 +23,38 @@
              </div>
             <!-- End -->
 
-            <!-- Start -->
-            <!--/*@thymesVar id="trform" type=""*/-->
-            <form action="#" th:action="@{/create}" th:object="${transaction}" method="post">
-            <div class="row form-group">
-                <div class="col-2">Type</div>
-                <div class="form-check form-check-inline">
-                     <input type="radio" class="form-check-input" th:field="*{type}">
-                        <label class="form-check-label">Revenue</label>
-                </div>
-                <div class="form-check form-check-inline">
-                     <input type="radio" class="form-check-input"  >
-                        <label class="form-check-label" >Expense</label>
-                </div>
-            </div>
-            <!-- End -->
+            <form action="#" th:action="@{/create}" th:object="${trform}" method="post">
+                <table>
+                    <tr>
+                        <td>Title:</td>
+                        <td><input type="text" th:field="*{type}" /></td>
+                        <td th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Title error message</td>
+                    </tr>
+                    <tr>
+                        <td>Content:</td>
+                        <td><input type="text" th:field="*{day}" /></td>
+                        <td th:if="${#fields.hasErrors('day')}" th:errors="*{day}">Content error message</td>
+                    </tr>
+                    <tr>
+                        <td>Content:</td>
+                        <td><input type="text" th:field="*{amount}" /></td>
+                        <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Content error message</td>
+                    </tr>
+                    <tr>
+                        <td>Content:</td>
+                        <td><input type="text" th:field="*{description}" /></td>
+                        <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Content error message</td>
+                    </tr>
 
-            <!-- Start -->
-            <div class ="row form-group">
-                <div class="col-2">
-                    <label >Day</label>
-                </div>
-                    <div class="col-6">
-                        <select class="form-control" >
-                            <option>SUNDAY</option>
-                            <option>MONDAY</option>
-                            <option>TUESDAY</option>
-                            <option>WEDNESDAY</option>
-                            <option>THURSDAY</option>
-                            <option>FRIDAY</option>
-                            <option>SATURDAY</option>
-                        </select>
-                    </div>
-             </div>
-            <!-- End -->
-
-            <!-- Start -->
-            <div class="row">
-                <div class="col-2">Amount</div>
-                <div class="col-6">
-                    <div class="input-group form-group">
-                        <input type="text" class="form-control" th:field="*{amount}">
-                        <div class="input-group-append">
-                            <span class="input-group-text">$</span>
-                            <span class="input-group-text">0.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- End -->
-
-            <!-- Start -->
-            <div class="row">
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control"  rows="2" ></textarea>
-                        </div>
-                    </div>
-            </div>
-            <!-- End -->
-
-            <!-- Start -->
-            <div class="row">
-                <div class="col-4 form-group">
-                    <button type="submit"  class="btn btn-primary">Create</button>
-                </div>
-
-            </div>
-            <!-- End -->
+                    <tr>
+                        <td><button type="submit">Submit post</button></td>
+                    </tr>
+                </table>
             </form>
+
+
+
+
         </div>
         <!-- End -->
 

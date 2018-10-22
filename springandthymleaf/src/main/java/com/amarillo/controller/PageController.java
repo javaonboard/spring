@@ -1,5 +1,6 @@
 package com.amarillo.controller;
 
+import com.amarillo.entity.Transaction;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class PageController {
 
     @GetMapping("/transaction")
     public String revenuePage(Model model){
+        model.addAttribute("trform", new Transaction());
         return "transaction";
     }
 }

@@ -12,6 +12,6 @@ import java.util.List;
 public interface TransactionRepository extends CrudRepository<Transaction,Long> {
 
     @Query(value = "SELECT * from TRANSACTION WHERE day = ?1",nativeQuery = true)
-    List<Transaction> getAllRevenueByDay(@Param("day") String day);
+    List<Transaction> getAllTransactionByDay(@Param("day") String day);
 
 }

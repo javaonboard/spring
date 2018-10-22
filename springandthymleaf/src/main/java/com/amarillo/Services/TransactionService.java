@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface TransactionService {
 
-    Transaction createRevenue(Transaction transaction);
-    Transaction updateRevenue(Transaction transaction);
-    void deleteRevenue(Transaction transaction);
-    Iterable<Transaction> getAllRevenue();
-    List<Transaction> getRevenueByDay(String day);
+    String createTransaction(Transaction transaction);
+    Transaction updateTransaction(Transaction transaction);
+    void deleteTransaction(Transaction transaction);
+    Iterable<Transaction> getAllTransaction();
+    List<Transaction> getTransactionByDay(String day);
 
 }
