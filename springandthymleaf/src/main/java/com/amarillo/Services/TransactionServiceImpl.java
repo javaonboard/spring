@@ -27,10 +27,18 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void updateTransaction(Transaction transaction) {
+    public void updateTransaction(String id, Transaction transaction) throws Exception {
         Optional<Transaction> tr = transactionRepository.findById(transaction.getId());
-        tr.get().setDescription(transaction.getDescription());
-        tr.get().setAmount(transaction.getAmount());
+        if(tr.isPresent()){
+            tr.get().setAmount(transaction.getAmount());
+            tr.get().setDescription(transaction.getDescription());
+            tr.get().setType(transaction.getType());
+            transactionRepository.save(tr.get());
+        }else{
+            //implement the Generic Exception
+            throw new Exception("Transaction Not Found!");
+        }
+
     }
 
     @Override

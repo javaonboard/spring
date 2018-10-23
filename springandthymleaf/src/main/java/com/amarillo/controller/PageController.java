@@ -34,14 +34,12 @@ public class PageController {
 
     @GetMapping("/transaction")
     public String loadTransactionPage(Model model, Transaction tran){
-        model.addAttribute("trform", new Transaction());
         Iterable<Transaction> trs = transactionService.getAllTransaction();
         List<String> days = new ArrayList<>();
         Arrays.asList(WeekDay.values()).stream().forEach(day->days.add(day.toString()));
+        model.addAttribute("trform", new Transaction());
         model.addAttribute("days",days);
         model.addAttribute("transactions", trs);
-        model.addAttribute("tran", tran);
-        model.addAttribute("dow", 0);
         model.addAttribute("next", "/create");
         return "transaction";
     }
@@ -51,7 +49,6 @@ public class PageController {
         LocalDateTime now = LocalDateTime.now();
         String time = now.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
         transaction.setTime(time);
-        transaction.setDay(WeekDay.values()[Integer.parseInt(transaction.getDay())].toString());
         transactionService.createTransaction(transaction);
         return "redirect:transaction";
     }
@@ -65,26 +62,16 @@ public class PageController {
 
     @RequestMapping(value = "/update/{id}")
     public String update(@PathVariable String id, Model model) {
-
         Iterable<Transaction> trs = transactionService.getAllTransaction();
         model.addAttribute("trform", transactionService.getTransactionById(Long.parseLong(id)).get());
-        model.addAttribute("dow", WeekDay.valueOf(transactionService.getTransactionById(Long.parseLong(id)).get().getDay()));
         model.addAttribute("transactions", trs);
-        model.addAttribute("next", "/update/" + id);
-
-
+        model.addAttribute("next", "/update/transaction/" + id);
         return ("transaction");
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public String saveUpdate(@PathVariable String id, @ModelAttribute("myObject") Transaction updateTr) {
-        long tid = Long.parseLong(id);
-        Transaction updated = transactionService.getTransactionById(tid).get();
-        updated.setType(updateTr.getType());
-        updated.setDay(updateTr.getDay());
-        updated.setAmount(updateTr.getAmount());
-        updated.setDescription(updateTr.getDescription());
-        transactionService.updateTransaction(updated);
+    @RequestMapping(value = "/update/transaction/{id}", method = RequestMethod.POST)
+    public String saveUpdate(@PathVariable String id, @ModelAttribute("myObject") Transaction updated) throws Exception {
+        transactionService.updateTransaction(id,updated);
         return "redirect:/transaction";
     }
 }

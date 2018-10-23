@@ -4,6 +4,6 @@ CREATE TABLE TRANSACTION (
   time varchar(100) NOT NULL,
   description varchar(100) NOT NULL,
   amount decimal(50,2) NOT NULL,
-  type varchar(1) NOT NULL,
+  type varchar(7) NOT NULL,
   primary key(id)
   );

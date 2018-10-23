@@ -44,13 +44,12 @@
                 <div class="row form-group">
                     <div class="col-lg-2"><label>Type</label></div>
                     <div class="col-sm-3 bg-primary">
-                        <input type="radio"  th:value="'R'" th:field="*{type}"><small>Revenue</small>
+                        <input type="radio"  th:value="'REVENUE'" th:field="*{type}"><small>Revenue</small>
                     </div>
                     <div class="col-sm-3 bg-primary">
-                        <input type="radio"  th:value="'E'"  th:field="*{type}"><small>Expense</small>
+                        <input type="radio"  th:value="'EXPENSE'"  th:field="*{type}"><small>Expense</small>
                     </div>
                 </div>
-
                 <!-- End -->
 
                 <!-- Start -->
@@ -59,22 +58,12 @@
                         <label>Day</label>
                     </div>
                     <div class="col-md-6">
-                        <!--<select class="form-control" th:field="*{day}" th:value= "${dow}" th:selected="${dow}">-->
-                        <select class="form-control" th:with="day=*{day}">
-                            <option value="" th:disabled="disabled" selected="true"
-                            th:text="${day==null}? 'Select the day' : ${day}">Select the day</option>
-                            <option th:each="day:${days}"
-                                    th:value="${day}"
-                                    th:text="${day}"></option>
-
-                         <!--   <option th:value="'0'" th:for="day">SUNDAY</option>
-                            <option th:value="'1'">MONDAY</option>
-                            <option th:value="'2'">TUESDAY</option>
-                            <option th:value="'3'">WEDNESDAY</option>
-                            <option th:value="'4'">THURSDAY</option>
-                            <option th:value="'5'">FRIDAY</option>
-                            <option th:value="'6'">SATURDAY</option>-->
+                        <select class="form-control"  th:with="Myday=*{day}" th:field="*{day}">
+                            <option value=""  selected=true
+                            th:text="${day!=null}?'Select a day':${Myday}">Select the day</option>
+                            <option th:each="da:${days}" th:value="${da}" th:text="${da}"></option>
                         </select>
+
                     </div>
                 </div>
                 <!-- End -->
@@ -92,7 +81,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- End -->
 
                 <!-- Start -->
@@ -100,7 +88,7 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea class="form-control"  rows="2" th:field="*{description}" ></textarea>
+                            <textarea class="form-control"  rows="2" th:field="*{description}"></textarea>
                         </div>
                     </div>
                 </div>
@@ -111,7 +99,6 @@
                     <div class="col-md-4 form-group">
                         <button type="submit"  class="btn btn-primary">Submit</button>
                     </div>
-
                 </div>
                 <!-- End -->
             </form>
@@ -136,9 +123,9 @@
                             <th scope="col">Day</th>
                             <th scope="col">Time</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Type</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Action Items</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -152,72 +139,19 @@
                             <td>
                                 <a th:href="@{'/delete/__${transaction.id}__'}" class="btn btn-danger btn-sm"><span>Delete </span></a>
                                 |
-                               <!-- <button class="btn btn-success btn-sm" th:onclick="'javascript:openUpdateModal(\'' + ${transaction.id}+'\');'">Update</button> -->
                                 <a th:href="@{'/update/__${transaction.id}__'}" class="btn btn-success btn-sm"><span>Update </span></a>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
             </div>
-            <div class="row-12">
-
-
-            </div>
-
-            <!-- Modal -->
-
-            <!-- End -->
-
         </div>
         <!-- End -->
 
     </div>
 </div>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
-
-
-<div id="updateModal" class="modal fade" role="dialog" th:fragment="modalContents" th:object="${trs01}" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" >Transation Type</h4>
-            </div>
-            <div class="modal-body">
-                <p>details</p>
-                <table class="table table-sm table-dark">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Day</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="tran : ${trs01}">
-                        <td th:text="${tran.id}"></td>
-                        <td th:text="${tran.day}"></td>
-                        <td th:text="${tran.time}"></td>
-                        <td th:text="${tran.description}"></td>
-                        <td th:text="${tran.amount}"></td>
-                        <td th:text="${tran.type}"></td>
-                        <td>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <div class="modal-footer">
-            <button typ="button" class="btn btn-info" data-dismiss="modal">Close</button>
-        </div>
+            <div th:replace="fragments/footer :: footer"></div>
     </div>
 </div>
 </body>

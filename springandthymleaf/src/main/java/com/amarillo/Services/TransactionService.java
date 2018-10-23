@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface TransactionService {
 
     String createTransaction(Transaction transaction);
-    void updateTransaction(Transaction transaction);
+    void updateTransaction(String id,Transaction transaction) throws Exception;
     void deleteTransaction(Transaction transaction);
     void deleteTransactionById(Long id);
     Iterable<Transaction> getAllTransaction();
