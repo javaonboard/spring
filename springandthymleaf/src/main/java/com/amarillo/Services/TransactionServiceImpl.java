@@ -27,17 +27,20 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction updateTransaction(Transaction transaction) {
-       Optional<Transaction> tr = transactionRepository.findById(transaction.getId());
-        tr.get().setDay(transaction.getDay());
+    public void updateTransaction(Transaction transaction) {
+        Optional<Transaction> tr = transactionRepository.findById(transaction.getId());
         tr.get().setDescription(transaction.getDescription());
-        tr.get().setType(transaction.getType());
-        return tr.get();
+        tr.get().setAmount(transaction.getAmount());
     }
 
     @Override
     public void deleteTransaction(Transaction transaction) {
         transactionRepository.delete(transaction);
+    }
+
+    @Override
+    public void deleteTransactionById(Long id) {
+        transactionRepository.deleteById(id);
     }
 
     @Override
@@ -48,5 +51,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getTransactionByDay(String day) {
         return transactionRepository.getAllTransactionByDay(day);
+    }
+
+    @Override
+    public Optional<Transaction> getTransactionById(Long id) {
+        return transactionRepository.findById(id);
     }
 }

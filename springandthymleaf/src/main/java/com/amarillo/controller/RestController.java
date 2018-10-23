@@ -23,29 +23,14 @@ public class RestController {
     @Autowired
     TransactionServiceImpl transactionService;
 
-    @GetMapping(value = "/report")
+/*    @GetMapping(value = "/transaction")
     public String getAllTransaction(Model model){
-        Iterable<Transaction> revs = transactionService.getAllTransaction();
-        model.addAttribute("revenues", revs);
-        return  "report";
-    }
-
-    @GetMapping(value = "/create")
-    public String createTransactionView(Model model){
-        model.addAttribute("tran", new Transaction());
-        return "transaction";
-
-    }
+        Iterable<Transaction> trs = transactionService.getAllTransaction();
+        model.addAttribute("transactions", trs);
+        return  "transaction";
+    }*/
 
 
-    @PostMapping(value="/create")
-    public String createTransaction(@ModelAttribute("trform") Transaction transaction){
-        LocalDateTime now = LocalDateTime.now();
-        String time = now.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
-        transaction.setTime(time);
-        transaction.setDay(WeekDay.values()[Integer.parseInt(transaction.getDay())].toString());
-        transactionService.createTransaction(transaction);
-        return "transaction";
-    }
+
 
 }
