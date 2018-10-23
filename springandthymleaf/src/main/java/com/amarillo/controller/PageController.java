@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Optional;
+import java.util.Arrays;
 
 @Controller
 public class PageController {
@@ -63,8 +61,8 @@ public class PageController {
     public String update(@PathVariable String id,Model model) {
         System.out.println("here" + id);
         long tid = Long.parseLong(id);
-        Iterable<Transaction> trs01 = transactionService.getAllTransaction();
-        Transaction tran = transactionService.getTransactionById(tid).get();
+        //Iterable<Transaction> trs01 = transactionService.getAllTransaction();
+        Iterable<Transaction> trs01 = Arrays.asList(transactionService.getTransactionById(tid).get());
         model.addAttribute("myObject", trs01);
         return "/transaction::modalContents";
     }
