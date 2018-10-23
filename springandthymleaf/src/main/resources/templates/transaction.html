@@ -26,7 +26,7 @@
 <div th:replace="fragments/header :: header">
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <!-- Start -->
         <div class="col-lg-4">
@@ -40,7 +40,7 @@
             <!-- End -->
 
 
-            <form action="#" th:action="@{/create}" th:object="${trform}" method="post" >
+            <form action="#" th:action="${next}" th:object="${trform}" method="post" >
                 <div class="row form-group">
                     <div class="col-lg-2"><label>Type</label></div>
                     <div class="col-sm-3 bg-primary">
@@ -59,14 +59,21 @@
                         <label>Day</label>
                     </div>
                     <div class="col-md-6">
-                        <select class="form-control" th:field="*{day}" >
-                            <option th:value="'0'">SUNDAY</option>
+                        <!--<select class="form-control" th:field="*{day}" th:value= "${dow}" th:selected="${dow}">-->
+                        <select class="form-control" th:with="day=*{day}">
+                            <option value="" th:disabled="disabled" selected="true"
+                            th:text="${day==null}? 'Select the day' : ${day}">Select the day</option>
+                            <option th:each="day:${days}"
+                                    th:value="${day}"
+                                    th:text="${day}"></option>
+
+                         <!--   <option th:value="'0'" th:for="day">SUNDAY</option>
                             <option th:value="'1'">MONDAY</option>
                             <option th:value="'2'">TUESDAY</option>
                             <option th:value="'3'">WEDNESDAY</option>
                             <option th:value="'4'">THURSDAY</option>
                             <option th:value="'5'">FRIDAY</option>
-                            <option th:value="'6'">SATURDAY</option>
+                            <option th:value="'6'">SATURDAY</option>-->
                         </select>
                     </div>
                 </div>
@@ -102,7 +109,7 @@
                 <!-- Start -->
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <button type="submit"  class="btn btn-primary">Create</button>
+                        <button type="submit"  class="btn btn-primary">Submit</button>
                     </div>
 
                 </div>
@@ -145,8 +152,8 @@
                             <td>
                                 <a th:href="@{'/delete/__${transaction.id}__'}" class="btn btn-danger btn-sm"><span>Delete </span></a>
                                 |
-                                <button class="btn btn-success btn-sm" th:onclick="'javascript:openUpdateModal(\'' + ${transaction.id}+'\');'">Update</button>
-
+                               <!-- <button class="btn btn-success btn-sm" th:onclick="'javascript:openUpdateModal(\'' + ${transaction.id}+'\');'">Update</button> -->
+                                <a th:href="@{'/update/__${transaction.id}__'}" class="btn btn-success btn-sm"><span>Update </span></a>
                             </td>
                         </tr>
 
@@ -171,7 +178,7 @@
 <div th:replace="fragments/footer :: footer"></div>
 
 
-<div id="updateModal" class="modal fade" role="dialog" th:fragment="modalContents" th:object="${myObject}" >
+<div id="updateModal" class="modal fade" role="dialog" th:fragment="modalContents" th:object="${trs01}" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -193,7 +200,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="tran : ${myObject}">
+                    <tr th:each="tran : ${trs01}">
                         <td th:text="${tran.id}"></td>
                         <td th:text="${tran.day}"></td>
                         <td th:text="${tran.time}"></td>
