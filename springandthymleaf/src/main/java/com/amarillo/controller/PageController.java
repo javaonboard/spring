@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Arrays;
 
 @Controller
 public class PageController {
@@ -30,14 +29,15 @@ public class PageController {
     }
 
     @GetMapping("/transaction")
-    public String loadTransactionPage(Model model,Transaction tran){
+    public String loadTransactionPage(Model model, Transaction tran){
         model.addAttribute("trform", new Transaction());
         Iterable<Transaction> trs = transactionService.getAllTransaction();
         model.addAttribute("transactions", trs);
-        model.addAttribute("tran",tran);
+        model.addAttribute("tran", tran);
+        model.addAttribute("dow", 0);
+        model.addAttribute("next", "/create");
         return "transaction";
     }
-
 
     @PostMapping(value="/create")
     public String createTransaction(@ModelAttribute("trform") Transaction transaction){
@@ -49,7 +49,6 @@ public class PageController {
         return "redirect:transaction";
     }
 
-
     @GetMapping(value="/delete/{id}")
     public String deleteTransaction(@PathVariable String id){
         long tid = Long.parseLong(id);
@@ -58,23 +57,28 @@ public class PageController {
     }
 
     @RequestMapping(value = "/update/{id}")
-    public String update(@PathVariable String id,Model model) {
+    public String update(@PathVariable String id, Model model) {
         System.out.println("here" + id);
         long tid = Long.parseLong(id);
-        //Iterable<Transaction> trs01 = transactionService.getAllTransaction();
-        Iterable<Transaction> trs01 = Arrays.asList(transactionService.getTransactionById(tid).get());
-        model.addAttribute("myObject", trs01);
-        return "/transaction::modalContents";
+        Iterable<Transaction> trs = transactionService.getAllTransaction();
+        model.addAttribute("trform", transactionService.getTransactionById(tid).get());
+        model.addAttribute("dow", WeekDay.valueOf(transactionService.getTransactionById(tid).get().getDay()));
+        model.addAttribute("tran", transactionService.getTransactionById(tid).get());
+        model.addAttribute("transactions", trs);
+        model.addAttribute("next", "/update/" + id);
+        //return "/transaction::modalContents";
+        return ("transaction");
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public String saveUpdate(@PathVariable String id, @ModelAttribute("myObject") Transaction updateTr) {
         long tid = Long.parseLong(id);
         Transaction updated = transactionService.getTransactionById(tid).get();
+        updated.setType(updateTr.getType());
+        updated.setDay(updateTr.getDay());
         updated.setAmount(updateTr.getAmount());
         updated.setDescription(updateTr.getDescription());
         transactionService.updateTransaction(updated);
         return "redirect:/transaction";
     }
-
 }
