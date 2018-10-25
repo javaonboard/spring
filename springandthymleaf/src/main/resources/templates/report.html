@@ -1,30 +1,114 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Report of Transactions</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Home Page</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" th:href="@{/bootstrap.min.css}" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
-<body>
-<div th:if="${not #lists.isEmpty(revenues)}">
-    <h2>Revenues List</h2>
-    <table class="glyphicon glyphicon-calendar">
-        <tr>
-            <th>Transaction Id</th>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Description</th>
-            <th>Amount</th>
-        </tr>
-        <tr th:each="transaction : ${revenues}">
-            <td th:text="${transaction.id}"></td>
-            <td th:text="${transaction.day}"></td>
-            <td th:text="${transaction.time}"></td>
-            <td th:text="${transaction.description}"></td>
-            <td th:text="${transaction.amount}"></td>
-            <td th:text="${transaction.type}"></td>
+<body style="background-color: #d5d5d5">
+<div th:replace="fragments/header :: header">
+</div>
 
-        </tr>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Start -->
+        <div class="col-lg-4">
+
+            <!-- Start -->
+            <div class="row">
+                <div class="col-md-8" >
+                    <h4>Select day(s) to get your report.</h4>
+                </div>
+            </div>
+            <!-- End -->
+            <form action="#" th:action="@{/getReport}" th:object="${selected}" method="post" >
+
+              <div class="row form-group mp">
+                      <ul>
+                              <div class="row checkbox mp">
+                                  <div class="col-md-6">
+                                  <li th:each="day : ${days}">
+                                  <input  type="checkbox" th:field="*{checkedDays}" th:value="${day}" />
+                                  <label th:text="${day}">day</label>
+                                  </li>
+                                  </div>
+                              </div>
+
+                      </ul>
+
+              </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <button type="submit"  class="btn btn-success">Calculate</button>
+                        <a href="/report" type="button" class="btn btn-info">reset</a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- End -->
+
+        <!-- Start-->
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-7">
+                    <h4>Summary Report</h4>
+                </div>
+            </div>
+            <div class="row-12">
+             <table class="table table-sm table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Day</th>
+                        <th scope="col">Transaction Count</th>
+                        <th scope="col">Revenue Count</th>
+                        <th scope="col">Total Revenue</th>
+                        <th scope="col">Expense count</th>
+                        <th scope="col">Total Expense</th>
+                        <th scope="col">Balance</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rp : ${reportSummary}">
+                        <td th:text="${rp.day}"></td>
+                        <td th:text="${rp.countOfDay}"></td>
+                        <td th:text="${rp.countOfRevenues}"></td>
+                        <td th:text="${rp.totalOfRevenues+' $'}"></td>
+                        <td th:text="${rp.countOfExpenses}"></td>
+                        <td th:text="${rp.totalOfExpenses+' $'}"></td>
+                        <td th:text="${rp.remainAmount+' $'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <table class="table table-sm table-dark">
+                    <tr>
+                        <th scope="col">Transaction Count: </th>
+                        <td th:text="${total.count}"></td>
+                        <th scope="col">Total Revenue: </th>
+                        <td th:text="${total.totalRevenue+' $'}"></td>
+                        <th scope="col">Total Expense: </th>
+                        <td th:text="${total.totalExpense+' $'}"></td>
+                        <th scope="col">Balance: </th>
+                        <td th:text="${total.balance+' $'}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- End -->
+
+    </div>
+</div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</div>
 </div>
 </body>
+
 </html>

@@ -15,7 +15,7 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Controller
 public class PageController {
@@ -35,10 +35,8 @@ public class PageController {
     @GetMapping("/transaction")
     public String loadTransactionPage(Model model, Transaction tran){
         Iterable<Transaction> trs = transactionService.getAllTransaction();
-        List<String> days = new ArrayList<>();
-        Arrays.asList(WeekDay.values()).stream().forEach(day->days.add(day.toString()));
         model.addAttribute("trform", new Transaction());
-        model.addAttribute("days",days);
+        model.addAttribute("days",getDays());
         model.addAttribute("transactions", trs);
         model.addAttribute("next", "/create");
         return "transaction";
@@ -65,6 +63,7 @@ public class PageController {
         Iterable<Transaction> trs = transactionService.getAllTransaction();
         model.addAttribute("trform", transactionService.getTransactionById(Long.parseLong(id)).get());
         model.addAttribute("transactions", trs);
+        model.addAttribute("days",getDays());
         model.addAttribute("next", "/update/transaction/" + id);
         return ("transaction");
     }
@@ -73,5 +72,12 @@ public class PageController {
     public String saveUpdate(@PathVariable String id, @ModelAttribute("myObject") Transaction updated) throws Exception {
         transactionService.updateTransaction(id,updated);
         return "redirect:/transaction";
+    }
+
+
+    public List<String> getDays(){
+        List<String> days = new ArrayList<>();
+        Arrays.asList(WeekDay.values()).stream().forEach(day->days.add(day.toString()));
+        return days;
     }
 }

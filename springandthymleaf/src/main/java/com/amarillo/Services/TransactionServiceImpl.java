@@ -33,6 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
             tr.get().setAmount(transaction.getAmount());
             tr.get().setDescription(transaction.getDescription());
             tr.get().setType(transaction.getType());
+            tr.get().setDay(transaction.getDay());
             transactionRepository.save(tr.get());
         }else{
             //implement the Generic Exception
