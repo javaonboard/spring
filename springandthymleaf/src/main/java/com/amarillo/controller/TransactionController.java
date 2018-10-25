@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Controller
-public class PageController {
+public class TransactionController {
 
     @Value("${spring.application.name}")
     private String appName;

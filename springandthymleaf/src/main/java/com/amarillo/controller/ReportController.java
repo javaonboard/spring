@@ -8,13 +8,22 @@ import com.amarillo.data.ReportSummary;
 
 import com.amarillo.logic.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -26,6 +35,8 @@ public class ReportController {
     @Autowired
     Processor processor;
 
+    List<ReportSummary> rpList;
+    FinalResult finalResults = new FinalResult();
 
     @GetMapping(value="/report")
     public String loadReport(Model model){
@@ -43,15 +54,16 @@ public class ReportController {
     }
 
     @PostMapping(value="/getReport")
-    public String calculate(@ModelAttribute("selected") CheckedDays checked,Model model){
+    public String calculate(@ModelAttribute("selected") CheckedDays checked,Model model)throws IOException{
         List<String> checkedDays = checked.getCheckedDays();
-        List<ReportSummary> rpList = processor.calculateSummaryReport(checkedDays);
+        rpList = processor.calculateSummaryReport(checkedDays);
         model.addAttribute("days",getDays());
-        model.addAttribute("total",processor.calculateTotal(rpList));
+        finalResults = processor.calculateTotal(rpList);
+        model.addAttribute("total",finalResults);
         model.addAttribute("reportSummary",rpList);
+        writhInJson(rpList,finalResults);
         return ("report");
     }
-
 
     public List<String> getDays(){
         List<String> days = new ArrayList<>();
@@ -59,8 +71,27 @@ public class ReportController {
         return days;
     }
 
-
+    public void writhInJson(List<ReportSummary> rs, FinalResult fs)throws IOException {
+        Map<String, Object> map = new HashMap<>();
+        map.put("Final Result", fs);
+        for (ReportSummary report : rs) map.put(report.getDay(), report);
+        JSONObject js = new JSONObject();
+        map.entrySet().stream().forEach(k -> {
+            try {
+                js.put(k.getKey(), k.getValue());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+        Path path = Paths.get("Report.txt");
+        Files.deleteIfExists(path);
+        FileWriter fw = new FileWriter(String.valueOf(path));
+        try {
+            fw.write(js.toString());
+            fw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
-
-
